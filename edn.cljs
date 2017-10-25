@@ -53,8 +53,6 @@
    (str/join ",\n")
    (gstring/format "{%s}")))
 
-
-;; \"%s\" [@@bs.module];
 (defn generate-module [module spec child?]
   (let [module (name module)]
     (gstring/format
@@ -104,11 +102,7 @@
                                            (println "Saved in" write-path ".")
                                            ;; run refmt
                                            (exec-sync (str "refmt --in-place " write-path))
-                                           )))))
-
-
-  ;; the entry
-  )
+                                           ))))))
 
 (defn -main [& args]
   (let [path (first args)]
