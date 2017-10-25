@@ -1,0 +1,36 @@
+{:button {:dir "antd/lib/button"
+          :props [:type :htmlType :icon :shape :size :loading :onClick :ghost]}
+
+ :icon {:dir "antd/lib/icon"
+        :props [:type :className :spin :style :onClick]}
+
+ :row {:dir "antd/lib/row"
+       :props [:type :className :gutter :glign :justify :style]}
+
+ :col {:dir "antd/lib/col"
+       :props [:className :span :order :offset :push :pull :xs :sm :md :lg :xl :style]}
+
+ :layout {:dir "antd/lib/layout"
+          :props [:className :style]
+          :sub-modules {:header [:className :style]
+                        :footer [:className :style]
+                        :content [:className :style]
+                        :sider [:className
+                                {:collapsible :bool}
+                                {:collapsed :bool}
+                                {:defaultCollapsed :bool}
+                                {:reverseArrow :bool}
+                                :onCollapse
+                                :trigger
+                                :width
+                                :collapsedWidth
+                                :breakpoint
+                                :style]}}
+
+ :menu {:dir "antd/lib/menu"
+        :props [:className :theme]
+        :sub-modules {:divider [:className {:disabled :bool}]
+                      :item [{:disabled :bool} :key]
+                      :subMenu [{:disabled :bool} :key :title :children :onTitleClick]
+                      :itemGroup [:title :children]}}
+ }

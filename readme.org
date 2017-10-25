@@ -1,0 +1,7 @@
+* edn-reason-react
+  Generate reason-react bindings from edn files.
+
+* Usage
+  #+BEGIN_SRC sh
+    lumo edn.cljs your.edn
+  #+END_SRC
