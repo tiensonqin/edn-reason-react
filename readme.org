@@ -1,5 +1,5 @@
 * edn-reason-react
-  Generate reason-react bindings from edn files.
+  Generate reason-react bindings from edn files using [[https://github.com/anmonteiro/lumo][lumo]].
 
 * Usage
   #+BEGIN_SRC sh
