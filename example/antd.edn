@@ -1,36 +1,723 @@
-{:button {:dir "antd/lib/button"
-          :props [:type :htmlType :icon :shape :size :loading :onClick :ghost]}
+{
+ ;; Components
+ ;; General
+ :button {:dir "antd/lib/button"
+          :props #{:type
+                   :htmlType
+                   :icon
+                   :shape
+                   :size
+                   :loading
+                   :onClick
+                   :ghost}}
 
  :icon {:dir "antd/lib/icon"
-        :props [:type :className :spin :style :onClick]}
+        :props #{:type
+                 :spin
+                 :onClick}}
 
+ ;; Layout
+ ;; grid
  :row {:dir "antd/lib/row"
-       :props [:type :className :gutter :glign :justify :style]}
+       :props #{:type
+                :gutter
+                :align
+                :justify}}
 
  :col {:dir "antd/lib/col"
-       :props [:className :span :order :offset :push :pull :xs :sm :md :lg :xl :style]}
+       :props #{:span :order :offset :push :pull :xs :sm :md :lg :xl}}
 
  :layout {:dir "antd/lib/layout"
-          :props [:className :style]
-          :sub-modules {:header [:className :style]
-                        :footer [:className :style]
-                        :content [:className :style]
-                        :sider [:className
-                                {:collapsible :bool}
-                                {:collapsed :bool}
-                                {:defaultCollapsed :bool}
-                                {:reverseArrow :bool}
-                                :onCollapse
-                                :trigger
-                                :width
-                                :collapsedWidth
-                                :breakpoint
-                                :style]}}
+          :props #{}
+          :sub-modules {:header #{}
+                        :footer #{}
+                        :content #{}
+                        :sider #{{:collapsible :bool}
+                                 {:collapsed :bool}
+                                 {:defaultCollapsed :bool}
+                                 {:reverseArrow :bool}
+                                 :onCollapse
+                                 :trigger
+                                 :width
+                                 :collapsedWidth
+                                 :breakpoint}}}
+
+ ;; Navigation
+
+ :affix {:dir "antd/lib/affix"
+         :props #{:offsetTop
+                  :offset
+                  :offsetBottom
+                  :target
+                  :onChange}}
+
+ :breadcrumb {:dir "antd/lib/breadcrumb"
+              :props #{:routes :params :separator :itemRender}
+              :sub-modules {:item #{:separator
+                                    :href}}}
+
+ :dropdown {:dir "antd/lib/dropdown"
+            :props #{:type
+                     :align
+                     :size
+                     :onClick
+                     :trigger
+                     :overlay
+                     {:visible :bool}
+                     {:disabled :bool}
+                     :onVisibleChange
+                     :placement}}
 
  :menu {:dir "antd/lib/menu"
-        :props [:className :theme]
-        :sub-modules {:divider [:className {:disabled :bool}]
-                      :item [{:disabled :bool} :key]
-                      :subMenu [{:disabled :bool} :key :title :children :onTitleClick]
-                      :itemGroup [:title :children]}}
+        :props #{:theme
+                 :mode
+                 :selectable
+                 :selectedKeys
+                 :defaultSelectedKeys
+                 :openKeys
+                 :defaultOpenKeys
+                 :onOpenChange
+                 :onSelect
+                 :onDeselect
+                 :onClick
+                 :openAnimation
+                 :openTransitionName
+                 :multiple
+                 :inlineIndent
+                 :inlineCollapsed}
+        :sub-modules {:divider #{{:disabled :bool}}
+                      :item #{{:disabled :bool} :key}
+                      :subMenu #{{:disabled :bool} :key :title :children :onTitleClick}
+                      :itemGroup #{:title :children}}}
+
+ :pagination {:dir "antd/lib/pagination"
+              :props #{:current :defaultCurrent :total :defaultPageSize :pageSize :onChange :pageSizeOptions :onShowSizeChange :size
+                       :showTotal
+                       :itemRender
+                       {:showSizeChanger :bool}
+                       {:showQuickJumper :bool}
+                       {:simple :bool}}}
+
+ :steps {:dir "antd/lib/steps"
+         :props #{:current :status :size :direction :progressDot :iconPrefix}
+         :sub-modules {:step #{:status :title :description :icon}}}
+
+ ;; Data Entry
+
+ :autoComplete {:dir "antd/lib/auto-complete"
+                :props #{:dataSource :value :defaultValue :onChange
+                         :onSelect :onSearch :placeholder :children
+                         {:allowClear :bool}
+                         {:disabled :bool}
+                         {:defaultActiveFirstOption :bool}
+                         {:filterOption :bool}
+                         {:backfill :bool}}}
+
+ :cascader {:dir "antd/lib/cascader"
+            :props #{:options :defaultValue :value :onChange :onPopupVisibleChange
+                     :displayRender :popupClassName :popupPlacement :placeholder :size :expandTrigger :notFoundContent :loadData :getPopupContainer
+                     {:disabled :bool}
+                     {:allowClear :bool}
+                     {:changeOnSelect :bool}
+                     {:showSearch :bool}}}
+
+ :checkbox {:dir "antd/lib/checkbox"
+            :props #{:value
+                     {:defaultChecked :bool}
+                     {:checked :bool}
+                     {:disabled :bool}
+                     :onChange
+                     :onMouseEnter
+                     :onMouseLeave
+                     :name}
+            :sub-modules {:group #{:defaultValue :value :options :onChange
+                                   {:disabled :bool}}}}
+
+ :datePicker {:dir "antd/lib/date-picker"
+              :props #{{:allowClear :bool}
+                       {:disabled :bool}
+                       :popupStyle
+                       :size
+                       :locale
+                       :disabledDate
+                       :getCalendarContainer
+                       {:open :bool}
+                       :onOpenChange
+                       :placeholder
+                       :value
+                       :defaultValue
+                       :format
+                       :onChange
+                       :showTime
+                       [:showTime.defaultValue :rename :showTimeDefaultValue]
+                       {:showToday :bool}
+                       :disabledTime
+                       :onOk
+                       :renderExtraFooter}}
+
+ :form {:dir "antd/lib/form"
+        :props #{:layout
+                 :onSubmit
+                 {:hideRequiredMark :bool}}
+        :sub-modules {:item #{:label
+                              :labelCol
+                              :wrapperCol
+                              :help
+                              :extra
+                              {:required :bool}
+                              :validateStatus
+                              {:hasFeedback :bool}
+                              {:colon :bool}}}
+        :raw "type wrapper = (ReasonReact.reactClass => ReasonReact.reactClass) [@bs];
+  external create : unit => wrapper = \"create\" [@@bs.module \"antd/lib/form\"];
+  let wrapper ::component ::make' ::props ::children => {
+    let wrapper = create ();
+    let reactClass' = ReasonReact.wrapReasonForJs ::component (fun _ => make' [||]);
+    let reactClass = wrapper reactClass' [@bs];
+    ReasonReact.wrapJsForReason ::reactClass ::props children
+  };"
+        }
+
+ :input {:dir "antd/lib/input"
+         :props #{:type
+                  :value
+                  :defaultValue
+                  :size
+                  {:disabled :bool}
+                  :addonBefore
+                  :addonAfter
+                  :prefix
+                  :suffix
+                  :onPressEnter
+                  :placeholder
+                  :onChange}
+         :sub-modules {:textArea #{:defaultValue
+                                   :value
+                                   :onPressEnter
+                                   {:autosize :bool}}
+                       :search #{:onSearch}
+                       :group #{:size
+                                {:compact :bool}}}}
+
+ :inputNumber {:dir "antd/lib/input-number"
+               :props #{:min
+                        :max
+                        :value
+                        :step
+                        :precision
+                        :defaultValue
+                        :onChange
+                        {:disabled :bool}
+                        :size
+                        :formatter
+                        :parser}}
+
+ :mention {:dir "antd/lib/mention"
+           :props #{:suggestions
+                    :suggestionStyle
+                    :onSearchChange
+                    :onChange
+                    :onSelect
+                    :notFoundContent
+                    {:loading :bool}
+                    {:multiLines :bool}
+                    :prefix
+                    :defaultValue
+                    :value
+                    :placeholder
+                    :getSuggestionContainer
+                    :onFocus
+                    :onBlur
+                    :readOnly
+                    {:disabled :bool}}
+           :sub-modules {:nav #{:value
+                                :data
+                                {:disabled :bool}}}
+           :raw "type t;
+  external toString : t => string = \"\" [@@bs.module \"antd/lib/mention\"];
+  external toContentState : string => t = \"\" [@@bs.module \"antd/lib/mention\"];
+  external toEditorState : string => t = \"\" [@@bs.module \"antd/lib/mention\"];
+  external getMentions : t => Js.Array.t string = \"\" [@@bs.module \"antd/lib/mention\"];"}
+
+ :rate {:dir "antd/lib/rate"
+        :props #{:count
+                 :value
+                 :defaultValue
+                 :onChange
+                 :onHoverChange
+                 {:allowHalf :bool}
+                 {:disabled :bool}
+                 :character}}
+
+ :radio {:dir "antd/lib/radio"
+         :props #{{:checked :bool}
+                  {:defaultChecked :bool}
+                  :value
+                  {:disabled :bool}}
+         :sub-modules {:group #{:name
+                                :onChange
+                                :value
+                                :defaultValue
+                                :size
+                                :options
+                                {:disabled :bool}}
+                       :button #{:value
+                                 {:defaultChecked :bool}
+                                 {:checked :bool}
+                                 {:disabled :bool}
+                                 :onChange
+                                 :onMouseEnter
+                                 :onMouseLeave
+                                 :name}}}
+
+ :select {:dir "antd/lib/select"
+          :props #{:value
+                   :defaultValue
+                   :mode
+                   {:multiple :bool}
+                   {:tags :bool}
+                   {:combobox :bool}
+                   {:allowClear :bool}
+                   {:filterOption :bool}
+                   :onSelect
+                   :onDeselect
+                   :onChange
+                   :onSearch
+                   :onBlur
+                   :onFocus
+                   :placeholder
+                   :notFoundContent
+                   {:dropdownMatchSelectWidth :bool}
+                   :optionFilterProp
+                   :optionLabelProp
+                   :size
+                   {:showSearch :bool}
+                   {:disabled :bool}
+                   {:defaultActiveFirstOption :bool}
+                   :dropdownStyle
+                   :dropdownClassName
+                   :getPopupContainer
+                   {:labelInValue :bool}
+                   :tokenSeparators
+                   :firstActiveValue}
+          :sub-modules {:option #{:value
+                                  :key
+                                  :title
+                                  {:disabled :bool}}
+                        :optGroup #{:label
+                                    :key}}}
+
+ :slider {:dir "antd/lib/slider"
+          :props #{{:range :bool}
+                   :min
+                   :max
+                   :step
+                   :marks
+                   {:dots :bool}
+                   :value
+                   :defaultValue
+                   {:included :bool}
+                   {:disabled :bool}
+                   {:vertical :bool}
+                   :onChange
+                   :onAfterChange
+                   :tipFormatter}}
+
+ :switch_ {:dir "antd/lib/switch"
+           :props #{{:checked :bool}
+                    {:defaultChecked :bool}
+                    :onChange
+                    :checkedChildren
+                    :unCheckedChildren
+                    :size
+                    {:disabled :bool}}}
+
+ :treeSelect {:dir "antd/lib/tree-select"
+              :props #{
+                       :value
+                       :labelInValue
+                       :defaultValue
+                       {:multiple :bool}
+                       :onSelect
+                       :onChange
+                       {:allowClear :bool}
+                       :onSearch
+                       :placeholder
+                       :searchPlaceholder
+                       :dropdownStyle
+                       {:dropdownMatchSelectWidth :bool}
+                       :size
+                       {:showSearch :bool}
+                       {:disabled :bool}
+                       :showCheckedStrategy
+                       {:treeDefaultExpandAll :bool}
+                       :treeDefaultExpandedKeys
+                       {:treeCheckable :bool}
+                       {:treeCheckStrictly :bool}
+                       {:filterTreeNode :bool}
+                       :treeNodeFilterProp
+                       :treeNodeLabelProp
+                       :treeData
+                       :treeDataSimpleMode
+                       :loadData
+                       :getPopupContainer}
+              :sub-modules {:treeNode #{{:disabled :bool}
+                                        {:disableCheckbox :bool}
+                                        :key
+                                        :value
+                                        :title
+                                        {:isLeaf :bool}}}}
+
+ :timePicker {:dir "antd/lib/time-picker"
+              :props #{:defaultValue
+                       :value
+                       :defaultOpenValue
+                       {:open :bool}
+                       :onOpenChange
+                       :placeholder
+                       :onChange
+                       :format
+                       {:disabled :bool}
+                       :disabledHours
+                       :disabledMinutes
+                       :disabledSeconds
+                       {:hideDisabledOptions :bool}
+                       :getPopupContainer
+                       :addon
+                       {:use12Hours :bool}
+                       :popupClassName}}
+
+ :transfer {:dir "antd/lib/transfer"
+            :props #{:dataSource
+                     :render
+                     :targetKeys
+                     :onChange
+                     :onSelectChange
+                     :onScroll
+                     :listStyle
+                     :titles
+                     :operations
+                     {:showSearch :bool}
+                     {:filterOption :bool}
+                     :searchPlaceholder
+                     :notFoundContent
+                     :footer
+                     :lazy
+                     :onSearchChange}}
+
+ :upload {:dir "antd/lib/upload"
+          :props #{:name
+                   :defaultFileList
+                   :fileList
+                   :action
+                   :data
+                   :headers
+                   {:showUploadList :bool}
+                   {:multiple :bool}
+                   :accept
+                   :beforeUpload
+                   :customRequest
+                   :onChange
+                   :listType
+                   :onPreview
+                   :onRemove
+                   {:supportServerRender :bool}
+                   {:disabled :bool}
+                   {:withCredentials :bool}}}
+
+ ;; Data display
+ :avatar {:dir "antd/lib/avatar"
+          :props #{:props
+                   :size
+                   :src
+                   :icon}}
+
+ :badge {:dir "antd/lib/badge"
+         :props #{:count
+                  :overflowCount
+                  {:showZero :bool}
+                  {:dot :bool}
+                  :status
+                  :text}}
+
+ :calendar {:dir "antd/lib/calendar"
+            :props #{:value
+                     :defaultValue
+                     :mode
+                     {:fullscreen :bool}
+                     :dateCellRender
+                     :monthCellRender
+                     :dateFullCellRender
+                     :monthFullCellRender
+                     :locale
+                     :onPanelChange
+                     :onSelect
+                     :disabledDate}}
+
+ :card {:dir "antd/lib/card"
+        :props #{
+                 :title
+                 :extra
+                 {:bordered :bool}
+                 :bodyStyle
+                 {:noHovering :bool}
+                 {:loading :bool}}
+        :sub-modules {:grid #{}}}
+
+ :carousel {:dir "antd/lib/carousel"
+            :props #{:effect
+                     {:dots :bool}
+                     {:vertical :bool}
+                     {:autoplay :bool}
+                     :easing
+                     :beforeChange
+                     :afterChange}}
+
+ :collapse {:dir "antd/lib/collapse"
+            :props #{:activeKey
+                     :defaultActiveKey
+                     :onChange}
+            :sub-modules {:panel #{:key
+                                   :header
+                                   {:disabled :bool}}}}
+
+ :popover {:dir "antd/lib/popover"
+           :props #{:title
+                    :content}}
+
+ :tooltip {:dir "antd/lib/tooltip"
+           :props #{:title
+                    :overlay
+                    :placement
+                    :getPopupContainer
+                    {:arrowPointAtCenter :bool}
+                    {:autoAdjustOverflow :bool}
+                    {:visible :bool}
+                    :onVisibleChange
+                    :mouseEnterDelay
+                    :mouseLeaveDelay
+                    :trigger
+                    :overlayClassName
+                    :overlayStyle}}
+
+ :table {:dir "antd/lib/table"
+         :props #{:rowSelection
+                  :pagination
+                  :size
+                  :dataSource
+                  :columns
+                  :rowKey
+                  :rowClassName
+                  :expandedRowRender
+                  :defaultExpandedRowKeys
+                  :expandedRowKeys
+                  {:defaultExpandAllRows :bool}
+                  :onExpandedRowsChange
+                  :onExpand
+                  :onChange
+                  {:loading :bool}
+                  :locale
+                  :indentSize
+                  :onRowClick
+                  :onRowDoubleClick
+                  :onRowMouseEnter
+                  :onRowMouseLeave
+                  {:bordered :bool}
+                  {:showHeader :bool}
+                  :footer
+                  :title
+                  :scroll}
+         :sub-modules {:column #{:title
+                                 :key
+                                 :dataIndex
+                                 :render
+                                 :filters
+                                 :onFilter
+                                 {:filterMultiple :bool}
+                                 :filterDropdown
+                                 {:filterDropdownVisible :bool}
+                                 :onFilterDropdownVisibleChange
+                                 :filteredValue
+                                 {:filtered :bool}
+                                 :filterIcon
+                                 :sorter
+                                 :colSpan
+                                 :width
+                                 :fixed
+                                 :sortOrder
+                                 :onCellClick}
+                       :columnGroup #{:title}}}
+
+ :tabs {:dir "antd/lib/tabs"
+        :props #{
+                 :activeKey
+                 :defaultActiveKey
+                 :onChange
+                 :onTabClick
+                 :onPrevClick
+                 :onNextClick
+                 :tabBarExtraContent
+                 :tabBarStyle
+                 :type
+                 :size
+                 :tabPosition
+                 :onEdit
+                 {:hideAdd :bool}
+                 {:animated :bool}}
+        :sub-modules {:tabPane #{:key
+                                 :tab
+                                 {:forceRender :bool}}}}
+
+ :tag {:dir "antd/lib/tag"
+       :props #{:color
+                {:closable :bool}
+                :onClose
+                :afterClose}
+       :sub-modules {:checkableTag #{{:checked :bool}
+                                     :onChange}}}
+
+ :timeline {:dir "antd/lib/timeline"
+            :props #{:pending}
+            :sub-modules {:item #{:color
+                                  :dot}}}
+
+ :tree {:dir "antd/lib/tree"
+        :props #{
+                 {:multiple :bool}
+                 {:checkable :bool}
+                 {:defaultExpandAll :bool}
+                 :defaultExpandedKeys
+                 :expandedKeys
+                 {:autoExpandParent :bool}
+                 :defaultCheckedKeys
+                 :checkedKeys
+                 :checkStrictly
+                 :defaultSelectedKeys
+                 :selectedKeys
+                 :onExpand
+                 :onCheck
+                 :onSelect
+                 :filterTreeNode
+                 :loadData
+                 :onRightClick
+                 {:draggable :bool}
+                 :onDragStart
+                 :onDragEnter
+                 :onDragOver
+                 :onDragLeave
+                 :onDragEnd
+                 :onDrop
+                 {:showLine :bool}
+                 {:showIcon :bool}}
+        :sub-modules {:treeNode #{{:disabled :bool}
+                                  {:disableCheckbox :bool}
+                                  :title
+                                  :key
+                                  {:isLeaf :bool}}}}
+ :alert {:dir "antd/lib/alert"
+         :props #{:type
+                  {:closable :bool}
+                  :closeText
+                  :message
+                  :description
+                  :onClose
+                  {:showIcon :bool}
+                  {:banner :bool}}}
+
+ :modal {:dir "antd/lib/modal"
+         :props #{{visible :bool}
+                  {confirmLoading :bool}
+                  title
+                  {closable :bool}
+                  onOk
+                  onCancel
+                  width
+                  footer
+                  okText
+                  okType
+                  cancelText
+                  {maskClosable :bool}
+                  wrapClassName
+                  afterClose
+                  getContainer
+                  zIndex}
+         :raw "type options;
+  type ref;
+  external info : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
+  external success : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
+  external error : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
+  external warning : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
+  external confirm : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];"}
+
+ :message {:raw "type content;
+  type duration = int;
+  type options;
+  external success : content => duration => (unit => unit [@bs.uncurry]) => unit =
+    \"\" [@@bs.module \"antd/lib/message\"];
+  external error : content => duration => (unit => unit [@bs.uncurry]) => unit =
+    \"\" [@@bs.module \"antd/lib/message\"];
+  external info : content => duration => (unit => unit [@bs.uncurry]) => unit =
+    \"\" [@@bs.module \"antd/lib/message\"];
+  external warning : content => duration => (unit => unit [@bs.uncurry]) => unit =
+    \"\" [@@bs.module \"antd/lib/message\"];
+  external warn : content => duration => (unit => unit [@bs.uncurry]) => unit =
+    \"\" [@@bs.module \"antd/lib/message\"];
+  external loading : content => duration => (unit => unit [@bs.uncurry]) => unit =
+    \"\" [@@bs.module \"antd/lib/message\"];
+  external config : options => unit = \"\" [@@bs.module \"antd/lib/message\"];
+  external destroy : unit => unit = \"\" [@@bs.module \"antd/lib/message\"];"}
+
+ :notification {:raw "type stringOrNode;
+  type options;
+  type key = string;
+  external success : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external error : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external info : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external warning : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external warn : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external close : key => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external destroy : unit => unit = \"\" [@@bs.module \"antd/lib/notification\"];
+  external config : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];"}
+
+ :progress {:dir "antd/lib/progress"
+            :props #{:type
+                     :percent
+                     :format
+                     :status
+                     {:showInfo :bool}
+                     :strokeWidth
+                     :width
+                     :gapDegree
+                     :gapPosition}}
+
+ :popconfirm {:dir "antd/lib/popconfirm"
+              :props #{:title
+                       :onConfirm
+                       :onCancel
+                       :okText
+                       :okType
+                       :cancelText}}
+
+ :spin {:dir "antd/lib/spin"
+        :props #{:size
+                 {:spinning :bool}
+                 :tip
+                 :delay
+                 :wrapperClassName}}
+
+ :anchor {:dir "antd/lib/anchor"
+          :props #{:offsetTop
+                   :offsetBottom
+                   :bounds
+                   {:affix :bool}
+                   {:showInkInFixed :bool}}
+          :sub-modules {:link #{:href :title}}}
+
+ :backTop {:dir "antd/lib/back-top"
+           :props #{:visibilityHeight
+                    :onClick
+                    :target}}
+
+ :localeProvider {:dir "antd/lib/locale-provider"
+                  :props #{:locale}}
  }

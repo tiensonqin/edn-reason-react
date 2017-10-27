@@ -1,8 +1,10 @@
+#!/usr/bin/env lumo
 (ns edn-reason-react.core
   (:require [cljs.reader :as reader]
             [cljs.nodejs :as nodejs]
             [clojure.string :as str]
             [clojure.walk :as walk]
+            [clojure.set :as set]
             [goog.string :as gstring]
             [goog.string.format]
             [goog.object :as gobj]))
@@ -23,19 +25,24 @@
   (str (.toLowerCase (.charAt s 0))
        (.slice s 1)))
 
-(defn read-edn [path f]
-  (.readFile fs path "utf8" (fn [err data] (f path (reader/read-string data)))))
+(defn read-edn [path f save-path]
+  (.readFile fs path "utf8" (fn [err data] (f path save-path (reader/read-string data)))))
 
 (defn reserved [prop]
-  (if (contains? #{"type"} prop)
+  (if (contains? #{"type" "lazy" "open"} prop)
     (str (name prop) "_")
-    prop))
+    (name prop)))
 
 (defn flatten-props [props]
   (map (fn [prop]
-         (-> (if (and (map? prop) (= :bool (last (first prop))))
-               (name (ffirst prop))
-               (name prop))
+         (-> (cond (and (map? prop) (= :bool (last (first prop))))
+                   (name (ffirst prop))
+
+                   (and (vector? prop) (= :rename (second prop)))
+                   (name (last prop))
+
+                   :else
+                   (name prop))
              (reserved))) props))
 
 (defn generate-args [props]
@@ -45,42 +52,68 @@
 (defn generate-props [props]
   (->>
    (for [prop props]
-     (if (and (map? prop) (= :bool (last (first prop))))                   ; boolean
+     (cond
+       (and (map? prop) (= :bool (last (first prop)))) ; boolean
        (let [prop (name (ffirst prop))]
          (gstring/format "\"%s\": unwrapBool %s" prop (reserved prop)))
+
+       (and (vector? prop) (= :rename (second prop))) ; rename
+       (let [original-prop (name (first prop))]
+         (gstring/format "\"%s\": from_opt %s" original-prop (reserved (last prop))))
+
+       :else
        (let [prop (name prop)]
          (gstring/format "\"%s\": from_opt %s" prop (reserved prop)))))
    (str/join ",\n")
    (gstring/format "{%s}")))
 
 (defn generate-module [module spec child?]
-  (let [module (name module)]
-    (gstring/format
-     "module %s = {
+  (let [module (name module)
+        spec (update spec :props (fn [props]
+                                   (if props (set/union props #{:id :className :style}))))]
+    (if (:props spec)
+      (gstring/format
+       "module %s = {
   external %s : ReasonReact.reactClass = %s;
   let make %s =>
     ReasonReact.wrapJsForReason
       reactClass::%s
       props::Js.Undefined.(%s);
   %s
+  %s
 };
 "
-     (capitalize module)
-     (lower-case module)
-     (if child?
-       (gstring/format "\"%s\" [@@bs.module \"%s\"]" (capitalize module) (:dir spec))
-       (gstring/format "\"%s\" [@@bs.module]" (:dir spec)))
-     (generate-args (:props spec))
-     (lower-case module)
-     (generate-props (:props spec))
-     (if (:sub-modules spec)
-       (->> (for [[module props] (:sub-modules spec)]
-              (generate-module module {:props props
-                                       :dir (:dir spec)} true))
-            (str/join "\n"))
-       ""))))
+       (capitalize module)
+       (lower-case module)
+       (if child?
+         (gstring/format "\"%s\" [@@bs.module \"%s\"]" (capitalize module) (:dir spec))
+         (gstring/format "\"%s\" [@@bs.module]" (:dir spec)))
+       (generate-args (:props spec))
+       (lower-case module)
+       (generate-props (:props spec))
+       (if (:raw spec) (str "\n" (:raw spec) "\n") "")
+       (if (:sub-modules spec)
+         (->> (for [[module props] (:sub-modules spec)]
+                (generate-module module {:props props
+                                         :dir (:dir spec)} true))
+              (str/join "\n"))
+         ""))
+      (gstring/format
+       "module %s = {
+ %s
+ %s
+};
+"
+       (capitalize module)
+       (if (:raw spec) (str "\n" (:raw spec) "\n") "")
+       (if (:sub-modules spec)
+         (->> (for [[module props] (:sub-modules spec)]
+                (generate-module module {:props props
+                                         :dir (:dir spec)} true))
+              (str/join "\n"))
+         "")))))
 
-(defn process [path result]
+(defn process [path save-path result]
   ;; helpers
 
   (let [result (->> (for [[module spec] result]
@@ -94,7 +127,7 @@
   let unwrapBool v => Js.Undefined.from_opt @@ optBoolToOptJsBoolean v;
 
 "))
-        write-path (str/replace path ".edn" ".re")]
+        write-path (if save-path save-path (str/replace path ".edn" ".re"))]
     (.writeFile fs write-path result (fn [err]
                                        (if err
                                          (println "Error: " err)
@@ -105,7 +138,8 @@
                                            ))))))
 
 (defn -main [& args]
-  (let [path (first args)]
-    (read-edn path process)))
+  (let [path (first args)
+        save-path (second args)]
+    (read-edn path process save-path)))
 
 (set! *main-cli-fn* -main)
