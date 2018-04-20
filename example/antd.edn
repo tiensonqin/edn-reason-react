@@ -168,13 +168,13 @@
                               :validateStatus
                               {:hasFeedback :bool}
                               {:colon :bool}}}
-        :raw "type wrapper = (ReasonReact.reactClass => ReasonReact.reactClass) [@bs];
-  external create : unit => wrapper = \"create\" [@@bs.module \"antd/lib/form\"];
-  let wrapper ::component ::make' ::props ::children => {
-    let wrapper = create ();
-    let reactClass' = ReasonReact.wrapReasonForJs ::component (fun _ => make' [||]);
-    let reactClass = wrapper reactClass' [@bs];
-    ReasonReact.wrapJsForReason ::reactClass ::props children
+        :raw "type wrapper = (. ReasonReact.reactClass => ReasonReact.reactClass);
+  [@bs.module \"antd/lib/form\"] external create : unit => wrapper = \"create\";
+  let wrapper = (~component, ~make', ~props, ~children) => {
+    let wrapper = create();
+    let reactClass' = ReasonReact.wrapReasonForJs(~component, ((_) => make'([||])));
+    let reactClass = wrapper(reactClass');
+    ReasonReact.wrapJsForReason(~reactClass, ~props, children);
   };"
         }
 
@@ -234,10 +234,10 @@
                                 :data
                                 {:disabled :bool}}}
            :raw "type t;
-  external toString : t => string = \"\" [@@bs.module \"antd/lib/mention\"];
-  external toContentState : string => t = \"\" [@@bs.module \"antd/lib/mention\"];
-  external toEditorState : string => t = \"\" [@@bs.module \"antd/lib/mention\"];
-  external getMentions : t => Js.Array.t string = \"\" [@@bs.module \"antd/lib/mention\"];"}
+  [@bs.module \"antd/lib/mention\"] external toString : t => string = \"\";
+  [@bs.module \"antd/lib/mention\"] external toContentState : string => t = \"\";
+  [@bs.module \"antd/lib/mention\"] external toEditorState : string => t = \"\";
+  [@bs.module \"antd/lib/mention\"] external getMentions : t => Js.Array.t(string)= \"\";"}
 
  :rate {:dir "antd/lib/rate"
         :props #{:count
@@ -323,7 +323,7 @@
                    :onAfterChange
                    :tipFormatter}}
 
- :switch_ {:dir "antd/lib/switch"
+ :_switch {:dir "antd/lib/switch"
            :props #{{:checked :bool}
                     {:defaultChecked :bool}
                     :onChange
@@ -643,36 +643,36 @@
                   zIndex}
          :raw "type options;
   type ref;
-  external info : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
-  external success : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
-  external error : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
-  external warning : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];
-  external confirm : options => ref = \"\" [@@bs.module \"antd/lib/modal\"];"}
+  [@bs.module \"antd/lib/modal\"] external info : options => ref = \"\";
+  [@bs.module \"antd/lib/modal\"] external success : options => ref = \"\";
+  [@bs.module \"antd/lib/modal\"] external error : options => ref = \"\";
+  [@bs.module \"antd/lib/modal\"] external warning : options => ref = \"\";
+  [@bs.module \"antd/lib/modal\"] external confirm : options => ref = \"\";"}
 
  :message {:raw "type content;
   type duration = int;
   type options;
-  type callback = (unit => unit) [@bs];
-  external success : content => duration => callback => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external error : content => duration => callback => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external info : content => duration => callback => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external warning : content => duration => callback => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external warn : content => duration => callback => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external loading : content => duration => callback => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external config : options => unit = \"\" [@@bs.module \"antd/lib/message\"];
-  external destroy : unit => unit = \"\" [@@bs.module \"antd/lib/message\"];"}
+  type callback = (. unit => unit);
+  [@bs.module \"antd/lib/message\"] external success : content => duration => callback => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external error : content => duration => callback => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external info : content => duration => callback => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external warning : content => duration => callback => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external warn : content => duration => callback => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external loading : content => duration => callback => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external config : options => unit = \"\";
+  [@bs.module \"antd/lib/message\"] external destroy : unit => unit = \"\";"}
 
  :notification {:raw "type stringOrNode;
   type options;
   type key = string;
-  external success : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external error : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external info : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external warning : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external warn : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external close : key => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external destroy : unit => unit = \"\" [@@bs.module \"antd/lib/notification\"];
-  external config : options => unit = \"\" [@@bs.module \"antd/lib/notification\"];"}
+  [@bs.module \"antd/lib/notification\"] external success : options => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external error : options => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external info : options => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external warning : options => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external warn : options => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external close : key => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external destroy : unit => unit = \"\";
+  [@bs.module \"antd/lib/notification\"] external config : options => unit = \"\";"}
 
  :progress {:dir "antd/lib/progress"
             :props #{:type

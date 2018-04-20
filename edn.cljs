@@ -15,10 +15,14 @@
 (def child-process (js/require "child_process"))
 (def exec-sync (gobj/get child-process "execSync"))
 
+(defn strip-underscore
+  [s]
+  (cond (= (.charAt s 0) "_") (.slice s 1) :else s))
+
 (defn capitalize
   [s]
-  (str (.toUpperCase (.charAt s 0))
-       (.slice s 1)))
+    (str (.toUpperCase (.charAt (strip-underscore s) 0))
+       (.slice (strip-underscore s) 1)))
 
 (defn lower-case
   [s]
@@ -46,8 +50,8 @@
              (reserved))) props))
 
 (defn generate-args [props]
-  (->> (map #(str "::" % "=?") (flatten-props props))
-       (str/join " ")))
+  (->> (map #(str "~" % "=?") (flatten-props props))
+       (str/join ",")))
 
 (defn generate-props [props]
   (->>
@@ -55,15 +59,15 @@
      (cond
        (and (map? prop) (= :bool (last (first prop)))) ; boolean
        (let [prop (name (ffirst prop))]
-         (gstring/format "\"%s\": unwrapBool %s" prop (reserved prop)))
+         (gstring/format "\"%s\": unwrapBool(%s)" prop (reserved prop)))
 
        (and (vector? prop) (= :rename (second prop))) ; rename
        (let [original-prop (name (first prop))]
-         (gstring/format "\"%s\": from_opt %s" original-prop (reserved (last prop))))
+         (gstring/format "\"%s\": fromOption(%s)" original-prop (reserved (last prop))))
 
        :else
        (let [prop (name prop)]
-         (gstring/format "\"%s\": from_opt %s" prop (reserved prop)))))
+         (gstring/format "\"%s\": fromOption(%s)" prop (reserved prop)))))
    (str/join ",\n")
    (gstring/format "{%s}")))
 
@@ -74,20 +78,24 @@
     (if (:props spec)
       (gstring/format
        "module %s = {
-  external %s : ReasonReact.reactClass = %s;
-  let make %s =>
-    ReasonReact.wrapJsForReason
-      reactClass::%s
-      props::Js.Undefined.(%s);
+  %s external %s : ReasonReact.reactClass = %s;
+  let make = (%s) =>
+    ReasonReact.wrapJsForReason(
+      ~reactClass=%s,
+      ~props=Js.Undefined.(%s)
+    );
   %s
   %s
 };
 "
        (capitalize module)
+       (if child?
+         (gstring/format "[@bs.module \"%s\"]" (:dir spec))
+         (gstring/format "[@bs.module]"))
        (lower-case module)
        (if child?
-         (gstring/format "\"%s\" [@@bs.module \"%s\"]" (capitalize module) (:dir spec))
-         (gstring/format "\"%s\" [@@bs.module]" (:dir spec)))
+         (gstring/format "\"%s\"" (capitalize module))
+         (gstring/format "\"%s\"" (:dir spec)))
        (generate-args (:props spec))
        (lower-case module)
        (generate-props (:props spec))
@@ -119,14 +127,7 @@
   (let [result (->> (for [[module spec] result]
                       (generate-module module spec false))
                     (str/join "\n")
-                    (str "let optBoolToOptJsBoolean =
-  fun
-  | None => None
-  | Some v => Some (Js.Boolean.to_js_boolean v);
-
-  let unwrapBool v => Js.Undefined.from_opt @@ optBoolToOptJsBoolean v;
-
-"))
+                    (str "let unwrapBool = v => Js.Undefined.fromOption(v);"))
         write-path (if save-path save-path (str/replace path ".edn" ".re"))]
     (.writeFile fs write-path result (fn [err]
                                        (if err
