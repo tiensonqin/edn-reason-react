@@ -79,7 +79,6 @@
       (gstring/format
        "module %s = {
   %s external %s : ReasonReact.reactClass = %s;
-  [%bs.raw {|require('%s/style')|}];
   let make = (%s) =>
     ReasonReact.wrapJsForReason(
       ~reactClass=%s,
@@ -97,7 +96,6 @@
        (if child?
          (gstring/format "\"%s\"" (capitalize module))
          (gstring/format "\"%s\"" (:dir spec)))
-       (:dir spec)
        (generate-args (:props spec))
        (lower-case module)
        (generate-props (:props spec))

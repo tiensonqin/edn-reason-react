@@ -3,7 +3,6 @@ let unwrapBool = v => Js.Undefined.fromOption(v);
 module Popconfirm = {
   [@bs.module]
   external popconfirm : ReasonReact.reactClass = "antd/lib/popconfirm";
-  [%bs.raw {|require('antd/lib/popconfirm/style')|}];
   let make =
       (
         ~onCancel=?,
@@ -39,7 +38,6 @@ module LocaleProvider = {
   [@bs.module]
   external localeProvider : ReasonReact.reactClass =
     "antd/lib/locale-provider";
-  [%bs.raw {|require('antd/lib/locale-provider/style')|}];
   let make = (~id=?, ~className=?, ~style=?, ~locale=?) =>
     ReasonReact.wrapJsForReason(
       ~reactClass=localeProvider,
@@ -57,7 +55,6 @@ module LocaleProvider = {
 
 module Tree = {
   [@bs.module] external tree : ReasonReact.reactClass = "antd/lib/tree";
-  [%bs.raw {|require('antd/lib/tree/style')|}];
   let make =
       (
         ~defaultCheckedKeys=?,
@@ -130,7 +127,6 @@ module Tree = {
   module TreeNode = {
     [@bs.module "antd/lib/tree"]
     external treeNode : ReasonReact.reactClass = "TreeNode";
-    [%bs.raw {|require('antd/lib/tree/style')|}];
     let make =
         (
           ~disabled=?,
@@ -163,7 +159,6 @@ module Tree = {
 
 module Table = {
   [@bs.module] external table : ReasonReact.reactClass = "antd/lib/table";
-  [%bs.raw {|require('antd/lib/table/style')|}];
   let make =
       (
         ~onRowMouseLeave=?,
@@ -236,7 +231,6 @@ module Table = {
   module Column = {
     [@bs.module "antd/lib/table"]
     external column : ReasonReact.reactClass = "Column";
-    [%bs.raw {|require('antd/lib/table/style')|}];
     let make =
         (
           ~filterMultiple=?,
@@ -297,7 +291,6 @@ module Table = {
   module ColumnGroup = {
     [@bs.module "antd/lib/table"]
     external columnGroup : ReasonReact.reactClass = "ColumnGroup";
-    [%bs.raw {|require('antd/lib/table/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~title=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=columnGroup,
@@ -316,7 +309,6 @@ module Table = {
 
 module Affix = {
   [@bs.module] external affix : ReasonReact.reactClass = "antd/lib/affix";
-  [%bs.raw {|require('antd/lib/affix/style')|}];
   let make =
       (
         ~offsetTop=?,
@@ -348,7 +340,6 @@ module Affix = {
 
 module Tabs = {
   [@bs.module] external tabs : ReasonReact.reactClass = "antd/lib/tabs";
-  [%bs.raw {|require('antd/lib/tabs/style')|}];
   let make =
       (
         ~onEdit=?,
@@ -397,7 +388,6 @@ module Tabs = {
   module TabPane = {
     [@bs.module "antd/lib/tabs"]
     external tabPane : ReasonReact.reactClass = "TabPane";
-    [%bs.raw {|require('antd/lib/tabs/style')|}];
     let make = (~key=?, ~tab=?, ~forceRender=?, ~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=tabPane,
@@ -418,7 +408,6 @@ module Tabs = {
 
 module Radio = {
   [@bs.module] external radio : ReasonReact.reactClass = "antd/lib/radio";
-  [%bs.raw {|require('antd/lib/radio/style')|}];
   let make =
       (
         ~checked=?,
@@ -447,7 +436,6 @@ module Radio = {
   module Group = {
     [@bs.module "antd/lib/radio"]
     external group : ReasonReact.reactClass = "Group";
-    [%bs.raw {|require('antd/lib/radio/style')|}];
     let make =
         (
           ~disabled=?,
@@ -483,7 +471,6 @@ module Radio = {
   module Button = {
     [@bs.module "antd/lib/radio"]
     external button : ReasonReact.reactClass = "Button";
-    [%bs.raw {|require('antd/lib/radio/style')|}];
     let make =
         (
           ~defaultChecked=?,
@@ -522,7 +509,6 @@ module Radio = {
 
 module Button = {
   [@bs.module] external button : ReasonReact.reactClass = "antd/lib/button";
-  [%bs.raw {|require('antd/lib/button/style')|}];
   let make =
       (
         ~type_=?,
@@ -560,7 +546,6 @@ module Button = {
 
 module Layout = {
   [@bs.module] external layout : ReasonReact.reactClass = "antd/lib/layout";
-  [%bs.raw {|require('antd/lib/layout/style')|}];
   let make = (~id=?, ~className=?, ~style=?) =>
     ReasonReact.wrapJsForReason(
       ~reactClass=layout,
@@ -576,7 +561,6 @@ module Layout = {
   module Header = {
     [@bs.module "antd/lib/layout"]
     external header : ReasonReact.reactClass = "Header";
-    [%bs.raw {|require('antd/lib/layout/style')|}];
     let make = (~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=header,
@@ -593,7 +577,6 @@ module Layout = {
   module Footer = {
     [@bs.module "antd/lib/layout"]
     external footer : ReasonReact.reactClass = "Footer";
-    [%bs.raw {|require('antd/lib/layout/style')|}];
     let make = (~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=footer,
@@ -610,7 +593,6 @@ module Layout = {
   module Content = {
     [@bs.module "antd/lib/layout"]
     external content : ReasonReact.reactClass = "Content";
-    [%bs.raw {|require('antd/lib/layout/style')|}];
     let make = (~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=content,
@@ -627,7 +609,6 @@ module Layout = {
   module Sider = {
     [@bs.module "antd/lib/layout"]
     external sider : ReasonReact.reactClass = "Sider";
-    [%bs.raw {|require('antd/lib/layout/style')|}];
     let make =
         (
           ~collapsedWidth=?,
@@ -683,7 +664,6 @@ module Notification = {
 module Checkbox = {
   [@bs.module]
   external checkbox : ReasonReact.reactClass = "antd/lib/checkbox";
-  [%bs.raw {|require('antd/lib/checkbox/style')|}];
   let make =
       (
         ~defaultChecked=?,
@@ -720,7 +700,6 @@ module Checkbox = {
   module Group = {
     [@bs.module "antd/lib/checkbox"]
     external group : ReasonReact.reactClass = "Group";
-    [%bs.raw {|require('antd/lib/checkbox/style')|}];
     let make =
         (
           ~defaultValue=?,
@@ -754,7 +733,6 @@ module Checkbox = {
 module Transfer = {
   [@bs.module]
   external transfer : ReasonReact.reactClass = "antd/lib/transfer";
-  [%bs.raw {|require('antd/lib/transfer/style')|}];
   let make =
       (
         ~searchPlaceholder=?,
@@ -808,7 +786,6 @@ module Transfer = {
 
 module Popover = {
   [@bs.module] external popover : ReasonReact.reactClass = "antd/lib/popover";
-  [%bs.raw {|require('antd/lib/popover/style')|}];
   let make = (~id=?, ~className=?, ~style=?, ~title=?, ~content=?) =>
     ReasonReact.wrapJsForReason(
       ~reactClass=popover,
@@ -828,7 +805,6 @@ module Popover = {
 module AutoComplete = {
   [@bs.module]
   external autoComplete : ReasonReact.reactClass = "antd/lib/auto-complete";
-  [%bs.raw {|require('antd/lib/auto-complete/style')|}];
   let make =
       (
         ~children=?,
@@ -876,7 +852,6 @@ module AutoComplete = {
 
 module Steps = {
   [@bs.module] external steps : ReasonReact.reactClass = "antd/lib/steps";
-  [%bs.raw {|require('antd/lib/steps/style')|}];
   let make =
       (
         ~progressDot=?,
@@ -909,7 +884,6 @@ module Steps = {
   module Step = {
     [@bs.module "antd/lib/steps"]
     external step : ReasonReact.reactClass = "Step";
-    [%bs.raw {|require('antd/lib/steps/style')|}];
     let make =
         (
           ~status=?,
@@ -940,7 +914,6 @@ module Steps = {
 
 module Alert = {
   [@bs.module] external alert : ReasonReact.reactClass = "antd/lib/alert";
-  [%bs.raw {|require('antd/lib/alert/style')|}];
   let make =
       (
         ~description=?,
@@ -979,7 +952,6 @@ module Alert = {
 module TimePicker = {
   [@bs.module]
   external timePicker : ReasonReact.reactClass = "antd/lib/time-picker";
-  [%bs.raw {|require('antd/lib/time-picker/style')|}];
   let make =
       (
         ~onOpenChange=?,
@@ -1035,7 +1007,6 @@ module TimePicker = {
 
 module Icon = {
   [@bs.module] external icon : ReasonReact.reactClass = "antd/lib/icon";
-  [%bs.raw {|require('antd/lib/icon/style')|}];
   let make = (~type_=?, ~spin=?, ~onClick=?, ~id=?, ~className=?, ~style=?) =>
     ReasonReact.wrapJsForReason(
       ~reactClass=icon,
@@ -1056,7 +1027,6 @@ module Icon = {
 module Dropdown = {
   [@bs.module]
   external dropdown : ReasonReact.reactClass = "antd/lib/dropdown";
-  [%bs.raw {|require('antd/lib/dropdown/style')|}];
   let make =
       (
         ~align=?,
@@ -1098,7 +1068,6 @@ module Dropdown = {
 
 module Rate = {
   [@bs.module] external rate : ReasonReact.reactClass = "antd/lib/rate";
-  [%bs.raw {|require('antd/lib/rate/style')|}];
   let make =
       (
         ~disabled=?,
@@ -1136,7 +1105,6 @@ module Rate = {
 
 module Modal = {
   [@bs.module] external modal : ReasonReact.reactClass = "antd/lib/modal";
-  [%bs.raw {|require('antd/lib/modal/style')|}];
   let make =
       (
         ~closable=?,
@@ -1198,7 +1166,6 @@ module Modal = {
 module Carousel = {
   [@bs.module]
   external carousel : ReasonReact.reactClass = "antd/lib/carousel";
-  [%bs.raw {|require('antd/lib/carousel/style')|}];
   let make =
       (
         ~vertical=?,
@@ -1234,7 +1201,6 @@ module Carousel = {
 
 module Card = {
   [@bs.module] external card : ReasonReact.reactClass = "antd/lib/card";
-  [%bs.raw {|require('antd/lib/card/style')|}];
   let make =
       (
         ~bodyStyle=?,
@@ -1267,7 +1233,6 @@ module Card = {
   module Grid = {
     [@bs.module "antd/lib/card"]
     external grid : ReasonReact.reactClass = "Grid";
-    [%bs.raw {|require('antd/lib/card/style')|}];
     let make = (~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=grid,
@@ -1286,7 +1251,6 @@ module Card = {
 module Calendar = {
   [@bs.module]
   external calendar : ReasonReact.reactClass = "antd/lib/calendar";
-  [%bs.raw {|require('antd/lib/calendar/style')|}];
   let make =
       (
         ~monthFullCellRender=?,
@@ -1332,7 +1296,6 @@ module Calendar = {
 
 module Switch = {
   [@bs.module] external _switch : ReasonReact.reactClass = "antd/lib/switch";
-  [%bs.raw {|require('antd/lib/switch/style')|}];
   let make =
       (
         ~defaultChecked=?,
@@ -1369,7 +1332,6 @@ module Switch = {
 module DatePicker = {
   [@bs.module]
   external datePicker : ReasonReact.reactClass = "antd/lib/date-picker";
-  [%bs.raw {|require('antd/lib/date-picker/style')|}];
   let make =
       (
         ~onOpenChange=?,
@@ -1431,7 +1393,6 @@ module DatePicker = {
 
 module Mention = {
   [@bs.module] external mention : ReasonReact.reactClass = "antd/lib/mention";
-  [%bs.raw {|require('antd/lib/mention/style')|}];
   let make =
       (
         ~suggestionStyle=?,
@@ -1492,7 +1453,6 @@ module Mention = {
   module Nav = {
     [@bs.module "antd/lib/mention"]
     external nav : ReasonReact.reactClass = "Nav";
-    [%bs.raw {|require('antd/lib/mention/style')|}];
     let make = (~value=?, ~data=?, ~disabled=?, ~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=nav,
@@ -1514,7 +1474,6 @@ module Mention = {
 module Pagination = {
   [@bs.module]
   external pagination : ReasonReact.reactClass = "antd/lib/pagination";
-  [%bs.raw {|require('antd/lib/pagination/style')|}];
   let make =
       (
         ~simple=?,
@@ -1565,7 +1524,6 @@ module Pagination = {
 module Cascader = {
   [@bs.module]
   external cascader : ReasonReact.reactClass = "antd/lib/cascader";
-  [%bs.raw {|require('antd/lib/cascader/style')|}];
   let make =
       (
         ~getPopupContainer=?,
@@ -1623,7 +1581,6 @@ module Cascader = {
 
 module Col = {
   [@bs.module] external col : ReasonReact.reactClass = "antd/lib/col";
-  [%bs.raw {|require('antd/lib/col/style')|}];
   let make =
       (
         ~push=?,
@@ -1665,7 +1622,6 @@ module Col = {
 
 module Spin = {
   [@bs.module] external spin : ReasonReact.reactClass = "antd/lib/spin";
-  [%bs.raw {|require('antd/lib/spin/style')|}];
   let make =
       (
         ~size=?,
@@ -1697,7 +1653,6 @@ module Spin = {
 
 module Avatar = {
   [@bs.module] external avatar : ReasonReact.reactClass = "antd/lib/avatar";
-  [%bs.raw {|require('antd/lib/avatar/style')|}];
   let make =
       (~props=?, ~size=?, ~src=?, ~icon=?, ~id=?, ~className=?, ~style=?) =>
     ReasonReact.wrapJsForReason(
@@ -1720,7 +1675,6 @@ module Avatar = {
 module TreeSelect = {
   [@bs.module]
   external treeSelect : ReasonReact.reactClass = "antd/lib/tree-select";
-  [%bs.raw {|require('antd/lib/tree-select/style')|}];
   let make =
       (
         ~multiple=?,
@@ -1795,7 +1749,6 @@ module TreeSelect = {
   module TreeNode = {
     [@bs.module "antd/lib/tree-select"]
     external treeNode : ReasonReact.reactClass = "TreeNode";
-    [%bs.raw {|require('antd/lib/tree-select/style')|}];
     let make =
         (
           ~disabled=?,
@@ -1830,7 +1783,6 @@ module TreeSelect = {
 
 module BackTop = {
   [@bs.module] external backTop : ReasonReact.reactClass = "antd/lib/back-top";
-  [%bs.raw {|require('antd/lib/back-top/style')|}];
   let make =
       (
         ~visibilityHeight=?,
@@ -1859,7 +1811,6 @@ module BackTop = {
 module Breadcrumb = {
   [@bs.module]
   external breadcrumb : ReasonReact.reactClass = "antd/lib/breadcrumb";
-  [%bs.raw {|require('antd/lib/breadcrumb/style')|}];
   let make =
       (
         ~routes=?,
@@ -1888,7 +1839,6 @@ module Breadcrumb = {
   module Item = {
     [@bs.module "antd/lib/breadcrumb"]
     external item : ReasonReact.reactClass = "Item";
-    [%bs.raw {|require('antd/lib/breadcrumb/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~separator=?, ~href=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=item,
@@ -1909,7 +1859,6 @@ module Breadcrumb = {
 module Collapse = {
   [@bs.module]
   external collapse : ReasonReact.reactClass = "antd/lib/collapse";
-  [%bs.raw {|require('antd/lib/collapse/style')|}];
   let make =
       (
         ~activeKey=?,
@@ -1936,7 +1885,6 @@ module Collapse = {
   module Panel = {
     [@bs.module "antd/lib/collapse"]
     external panel : ReasonReact.reactClass = "Panel";
-    [%bs.raw {|require('antd/lib/collapse/style')|}];
     let make = (~key=?, ~header=?, ~disabled=?, ~id=?, ~className=?, ~style=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=panel,
@@ -1957,7 +1905,6 @@ module Collapse = {
 
 module Form = {
   [@bs.module] external form : ReasonReact.reactClass = "antd/lib/form";
-  [%bs.raw {|require('antd/lib/form/style')|}];
   let make =
       (
         ~layout=?,
@@ -1993,7 +1940,6 @@ module Form = {
   module Item = {
     [@bs.module "antd/lib/form"]
     external item : ReasonReact.reactClass = "Item";
-    [%bs.raw {|require('antd/lib/form/style')|}];
     let make =
         (
           ~colon=?,
@@ -2034,7 +1980,6 @@ module Form = {
 
 module Tag = {
   [@bs.module] external tag : ReasonReact.reactClass = "antd/lib/tag";
-  [%bs.raw {|require('antd/lib/tag/style')|}];
   let make =
       (
         ~color=?,
@@ -2063,7 +2008,6 @@ module Tag = {
   module CheckableTag = {
     [@bs.module "antd/lib/tag"]
     external checkableTag : ReasonReact.reactClass = "CheckableTag";
-    [%bs.raw {|require('antd/lib/tag/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~checked=?, ~onChange=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=checkableTag,
@@ -2083,7 +2027,6 @@ module Tag = {
 
 module Anchor = {
   [@bs.module] external anchor : ReasonReact.reactClass = "antd/lib/anchor";
-  [%bs.raw {|require('antd/lib/anchor/style')|}];
   let make =
       (
         ~offsetTop=?,
@@ -2114,7 +2057,6 @@ module Anchor = {
   module Link = {
     [@bs.module "antd/lib/anchor"]
     external link : ReasonReact.reactClass = "Link";
-    [%bs.raw {|require('antd/lib/anchor/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~href=?, ~title=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=link,
@@ -2134,7 +2076,6 @@ module Anchor = {
 
 module Input = {
   [@bs.module] external input : ReasonReact.reactClass = "antd/lib/input";
-  [%bs.raw {|require('antd/lib/input/style')|}];
   let make =
       (
         ~suffix=?,
@@ -2179,7 +2120,6 @@ module Input = {
   module TextArea = {
     [@bs.module "antd/lib/input"]
     external textArea : ReasonReact.reactClass = "TextArea";
-    [%bs.raw {|require('antd/lib/input/style')|}];
     let make =
         (
           ~defaultValue=?,
@@ -2209,7 +2149,6 @@ module Input = {
   module Search = {
     [@bs.module "antd/lib/input"]
     external search : ReasonReact.reactClass = "Search";
-    [%bs.raw {|require('antd/lib/input/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~onSearch=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=search,
@@ -2227,7 +2166,6 @@ module Input = {
   module Group = {
     [@bs.module "antd/lib/input"]
     external group : ReasonReact.reactClass = "Group";
-    [%bs.raw {|require('antd/lib/input/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~size=?, ~compact=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=group,
@@ -2248,7 +2186,6 @@ module Input = {
 module Timeline = {
   [@bs.module]
   external timeline : ReasonReact.reactClass = "antd/lib/timeline";
-  [%bs.raw {|require('antd/lib/timeline/style')|}];
   let make = (~id=?, ~className=?, ~style=?, ~pending=?) =>
     ReasonReact.wrapJsForReason(
       ~reactClass=timeline,
@@ -2265,7 +2202,6 @@ module Timeline = {
   module Item = {
     [@bs.module "antd/lib/timeline"]
     external item : ReasonReact.reactClass = "Item";
-    [%bs.raw {|require('antd/lib/timeline/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~color=?, ~dot=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=item,
@@ -2286,7 +2222,6 @@ module Timeline = {
 module Progress = {
   [@bs.module]
   external progress : ReasonReact.reactClass = "antd/lib/progress";
-  [%bs.raw {|require('antd/lib/progress/style')|}];
   let make =
       (
         ~format=?,
@@ -2326,7 +2261,6 @@ module Progress = {
 
 module Badge = {
   [@bs.module] external badge : ReasonReact.reactClass = "antd/lib/badge";
-  [%bs.raw {|require('antd/lib/badge/style')|}];
   let make =
       (
         ~overflowCount=?,
@@ -2360,7 +2294,6 @@ module Badge = {
 
 module Menu = {
   [@bs.module] external menu : ReasonReact.reactClass = "antd/lib/menu";
-  [%bs.raw {|require('antd/lib/menu/style')|}];
   let make =
       (
         ~onOpenChange=?,
@@ -2413,7 +2346,6 @@ module Menu = {
   module Divider = {
     [@bs.module "antd/lib/menu"]
     external divider : ReasonReact.reactClass = "Divider";
-    [%bs.raw {|require('antd/lib/menu/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~disabled=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=divider,
@@ -2431,7 +2363,6 @@ module Menu = {
   module Item = {
     [@bs.module "antd/lib/menu"]
     external item : ReasonReact.reactClass = "Item";
-    [%bs.raw {|require('antd/lib/menu/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~disabled=?, ~key=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=item,
@@ -2450,7 +2381,6 @@ module Menu = {
   module SubMenu = {
     [@bs.module "antd/lib/menu"]
     external subMenu : ReasonReact.reactClass = "SubMenu";
-    [%bs.raw {|require('antd/lib/menu/style')|}];
     let make =
         (
           ~disabled=?,
@@ -2482,7 +2412,6 @@ module Menu = {
   module ItemGroup = {
     [@bs.module "antd/lib/menu"]
     external itemGroup : ReasonReact.reactClass = "ItemGroup";
-    [%bs.raw {|require('antd/lib/menu/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~title=?, ~children=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=itemGroup,
@@ -2502,7 +2431,6 @@ module Menu = {
 
 module Tooltip = {
   [@bs.module] external tooltip : ReasonReact.reactClass = "antd/lib/tooltip";
-  [%bs.raw {|require('antd/lib/tooltip/style')|}];
   let make =
       (
         ~arrowPointAtCenter=?,
@@ -2550,7 +2478,6 @@ module Tooltip = {
 
 module Upload = {
   [@bs.module] external upload : ReasonReact.reactClass = "antd/lib/upload";
-  [%bs.raw {|require('antd/lib/upload/style')|}];
   let make =
       (
         ~withCredentials=?,
@@ -2609,7 +2536,6 @@ module Upload = {
 module InputNumber = {
   [@bs.module]
   external inputNumber : ReasonReact.reactClass = "antd/lib/input-number";
-  [%bs.raw {|require('antd/lib/input-number/style')|}];
   let make =
       (
         ~min=?,
@@ -2674,7 +2600,6 @@ module Message = {
 
 module Row = {
   [@bs.module] external row : ReasonReact.reactClass = "antd/lib/row";
-  [%bs.raw {|require('antd/lib/row/style')|}];
   let make =
       (
         ~type_=?,
@@ -2704,7 +2629,6 @@ module Row = {
 
 module Select = {
   [@bs.module] external select : ReasonReact.reactClass = "antd/lib/select";
-  [%bs.raw {|require('antd/lib/select/style')|}];
   let make =
       (
         ~multiple=?,
@@ -2783,7 +2707,6 @@ module Select = {
   module Option = {
     [@bs.module "antd/lib/select"]
     external option : ReasonReact.reactClass = "Option";
-    [%bs.raw {|require('antd/lib/select/style')|}];
     let make =
         (
           ~value=?,
@@ -2813,7 +2736,6 @@ module Select = {
   module OptGroup = {
     [@bs.module "antd/lib/select"]
     external optGroup : ReasonReact.reactClass = "OptGroup";
-    [%bs.raw {|require('antd/lib/select/style')|}];
     let make = (~id=?, ~className=?, ~style=?, ~label=?, ~key=?) =>
       ReasonReact.wrapJsForReason(
         ~reactClass=optGroup,
@@ -2833,7 +2755,6 @@ module Select = {
 
 module Slider = {
   [@bs.module] external slider : ReasonReact.reactClass = "antd/lib/slider";
-  [%bs.raw {|require('antd/lib/slider/style')|}];
   let make =
       (
         ~onAfterChange=?,
